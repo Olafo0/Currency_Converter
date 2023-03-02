@@ -1,9 +1,14 @@
+from msilib.schema import CustomAction
+from sre_parse import State
 import tkinter as tk
+import customtkinter
 import csv
 
 def main():
     root = tk.Tk()
     root.geometry("500x500")
+    root.title("Currency converter!")
+    root.resizable(False,False)
 
     #Reading the database
     file = open("Task3_data.csv","r")
@@ -40,14 +45,14 @@ def main():
     current_JPY_TO_GBP = currency_converter_data[recent_values][6]
     print("Current JPY TO GBP value - ",current_JPY_TO_GBP)
 
+    note_label1 = tk.Label(root,font=("arial",11), text="Firstly, Please select what currecny you're exchanging the money 'from'")
+    note_label1.place(x=20,y=35)
 
+    note_label2 = tk.Label(root,font=("arial",11), text="Thirdly, Select what currecny you're exchanging the money 'to'")
+    note_label2.place(x=25,y=170)
 
-
-    note_label1 = tk.Label(root,font=("arial",12), text="Select what currecny you're transferring the money 'from'")
-    note_label1.place(x=95,y=35)
-
-    note_label2 = tk.Label(root,font=("arial",12), text="Select what currecny you're transferring the money 'to'")
-    note_label2.place(x=95,y=170)
+    enter_label = tk.Label(root,text="Enter the amount: ")
+    enter_label.place(x=75,y=122)
 
 
     # Transferring from
@@ -222,46 +227,113 @@ def main():
     def convert_cur():
         try:
             from_number = float(From_entry.get())
-            print(from_number)
+
+            # GBP TO ALL -------------------------------------------------------------------------------------------------------------------------------------------------------
+            #GBP TO EUR
+            if GBP_calculation_from == True and EUR_calculation_to == True:
+                calculation = from_number * float(current_GPT_TO_EUR)
+                cal = round(calculation,2)
+                string_cal = str(cal) + " Euros"
+                print(string_cal)
+                Exchanged_to.config(state="normal")
+                Exchanged_to.delete(0, "end")
+                Exchanged_to.insert(0,string_cal)
+                Exchanged_to.config(state="disabled")
+
+            #EUR TO GBP
+            elif EUR_calculation_from == True and GBP_calculation_to == True:
+                calculation = from_number * float(current_EUR_TO_GBP)
+                cal = round(calculation,2)
+                string_cal = str(cal) + " Pounds"
+                print(string_cal)
+                Exchanged_to.config(state="normal")
+                Exchanged_to.delete(0, "end")
+                Exchanged_to.insert(0,string_cal)
+                Exchanged_to.config(state="disabled")
+
+            #GBP TO AUD
+            elif GBP_calculation_from == True and AUS_calculation_to == True:
+                calculation = from_number * float(current_GBP_TO_AUS)
+                cal = round(calculation,2)
+                string_cal = str(cal) + " A-Dollar"
+                print(string_cal)
+                Exchanged_to.config(state="normal")
+                Exchanged_to.delete(0, "end")
+                Exchanged_to.insert(0,string_cal)
+                Exchanged_to.config(state="disabled")
+
+            #AUD TO GBP
+            elif AUS_calculation_from == True and GBP_calculation_to == True:
+                calculation = from_number * float(current_AUS_TO_GBP)
+                cal = round(calculation,2)
+                string_cal = str(cal) + " Pounds"
+                print(string_cal)
+                Exchanged_to.config(state="normal")
+                Exchanged_to.delete(0, "end")
+                Exchanged_to.insert(0,string_cal)
+                Exchanged_to.config(state="disabled")
+
+            #GBP TO JPY
+            elif GBP_calculation_from == True and JPY_calculation_to == True:
+                calculation = from_number * float(current_GBP_TO_JPY)
+                cal = round(calculation,2)
+                string_cal = str(cal) + " J-YEN"
+                print(string_cal)
+                Exchanged_to.config(state="normal")
+                Exchanged_to.delete(0, "end")
+                Exchanged_to.insert(0,string_cal)
+                Exchanged_to.config(state="disabled")
+
+            #JPY TO GBP
+            elif JPY_calculation_from == True and GBP_calculation_to == True:
+                calculation = from_number * float(current_JPY_TO_GBP)
+                cal = round(calculation,2)
+                string_cal = str(cal) + " Pound"
+                print(string_cal)
+                Exchanged_to.config(state="normal")
+                Exchanged_to.delete(0, "end")
+                Exchanged_to.insert(0,string_cal)
+                Exchanged_to.config(state="disabled")
+            # EUR TO ALL -------------------------------------------------------------------------------------------------------------------------------------------------------
+
         except ValueError:
-            Warning_error = tk.Label(root, text="Make sure you enter a number in both fields.",fg="Red",font=("arial",12))
+            Warning_error = tk.Label(root, text=" * Make sure you enter a number in both fields.",fg="Red",font=("arial",12))
             Warning_error.place(x=120,y=410)
             From_entry.delete(0,"end")
-
-
-            if GBP_calculation_from == True and EURAUS_calculation_to:
-                print("")
-
+            
     #Entry From
-    From_entry = tk.Entry(root)
+    From_entry = tk.Entry(root,font=("arial",15),width=10,justify="center")
     From_entry.place(x=200,y=120)
 
     #Exchanged To
-    Exchanged_to = tk.Entry(root)
-    Exchanged_to.place(x=200,y=360)
+    Exchanged_to = tk.Entry(root,font=("arial",20),width=15,state="disabled",justify="center")
+    Exchanged_to.place(x=175,y=360)
 
     #Convert button
     Convert_button = tk.Button(root, text="Convert",font=("arial",15),command=convert_cur)
     Convert_button.place(x=220,y=295)
 
+    convert_label = tk.Label(root, text="Conversion: ",font=("arial",12))
+    convert_label.place(x=80,y=364)
+
     #selection buttons(from)
-    GBP_button_from = tk.Button(root, text="GBP",font=("arial",12),command=GBP_flag_from)
+    GBP_button_from = customtkinter.CTkButton(master=root, text="GBP",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_flag_from)
     GBP_button_from.place(x=125,y=70)
-    EUR_button_from = tk.Button(root, text="EUR",font=("arial",12),command=EUR_flag_from)
+    EUR_button_from = customtkinter.CTkButton(master=root, text="EUR",font=("arial",12),corner_radius=6,border_width=2,width=4,command=EUR_flag_from)
     EUR_button_from.place(x=200,y=70)
-    AUS_button_from = tk.Button(root, text="AUS",font=("arial",12),command=AUS_flag_from)
+    AUS_button_from = customtkinter.CTkButton(master=root, text="AUS",font=("arial",12),corner_radius=6,border_width=2,width=4,command=AUS_flag_from)
     AUS_button_from.place(x=275,y=70)
-    JPY_button_from = tk.Button(root, text="JPY",font=("arial",12),command=JPY_flag_from)
+    JPY_button_from = customtkinter.CTkButton(master=root, text="JPY",font=("arial",12),corner_radius=6,border_width=2,width=4,command=JPY_flag_from)
     JPY_button_from.place(x=350,y=70)
 
     #selection buttons(to)
-    GBP_button_to = tk.Button(root, text="GBP",font=("arial",12),command=GBP_flag_to)
+    GBP_button_to = customtkinter.CTkButton(master=root, text="GBP",font=("arial",12),corner_radius=6,border_width=2,width=4,command=GBP_flag_to)
     GBP_button_to.place(x=125,y=210)
-    EUR_button_to = tk.Button(root, text="EUR",font=("arial",12),command=EUR_flag_to)
+    EUR_button_to = customtkinter.CTkButton(master=root, text="EUR",font=("arial",12),corner_radius=6,border_width=2,width=4,command=EUR_flag_to)
     EUR_button_to.place(x=200,y=210)
-    AUS_button_to = tk.Button(root, text="AUS",font=("arial",12),command=AUS_flag_to)
+    AUS_button_to = customtkinter.CTkButton(master=root, text="AUS",font=("arial",12),corner_radius=6,border_width=2,width=4,command=AUS_flag_to)
     AUS_button_to.place(x=275,y=210)
-    JPY_button_to = tk.Button(root, text="JPY",font=("arial",12),command=JPY_flag_to)
+    JPY_button_to = customtkinter.CTkButton(master=root, text="JPY",font=("arial",12),corner_radius=6,border_width=2,width=4,command=JPY_flag_to)
     JPY_button_to.place(x=350,y=210)
 
     root.mainloop()
