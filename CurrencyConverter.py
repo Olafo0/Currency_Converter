@@ -1,5 +1,4 @@
-from msilib.schema import CustomAction
-from sre_parse import State
+
 import tkinter as tk
 import customtkinter
 import csv
@@ -45,10 +44,10 @@ def main():
     current_JPY_TO_GBP = currency_converter_data[recent_values][6]
     print("Current JPY TO GBP value - ",current_JPY_TO_GBP)
 
-    note_label1 = tk.Label(root,font=("arial",11), text="Firstly, Please select what currecny you're exchanging the money 'from'")
+    note_label1 = tk.Label(root,font=("arial",11), text="Please select what currecny you're exchanging the money 'from'")
     note_label1.place(x=20,y=35)
 
-    note_label2 = tk.Label(root,font=("arial",11), text="Thirdly, Select what currecny you're exchanging the money 'to'")
+    note_label2 = tk.Label(root,font=("arial",11), text="Select what currecny you're exchanging the money 'to'")
     note_label2.place(x=25,y=170)
 
     enter_label = tk.Label(root,text="Enter the amount: ")
