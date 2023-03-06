@@ -149,29 +149,6 @@ def main():
         plt.show()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # Transferring from
 
     #Declaration 
