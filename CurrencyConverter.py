@@ -28,6 +28,7 @@ def main():
     last_30_days_GBP_TO_JPY_VALUE = []
     last_30_days_JPY_TO_GBP_VALUE = []
     last_30_days_GBP_TO_USD_VALUE = []
+    last_30_days_USD_TO_GBP_VALUE = []
 
     for row1 in datareader1:
         current_data.append(row1)
@@ -46,6 +47,7 @@ def main():
         last_30_days_GBP_TO_JPY_VALUE.append(float(current_data[v][5]))
         last_30_days_JPY_TO_GBP_VALUE.append(float(current_data[v][6]))
         last_30_days_GBP_TO_USD_VALUE.append(float(current_data[v][7]))
+        last_30_days_USD_TO_GBP_VALUE.append(float(current_data[v][8]))
 
 
     #Reading the database
@@ -82,7 +84,7 @@ def main():
     #JPY TO GBP
     current_JPY_TO_GBP = currency_converter_data[recent_values][6]
     print("Current JPY TO GBP value - ",current_JPY_TO_GBP)
-
+    
     #GBP TO USD
     current_GBP_TO_USD = currency_converter_data[recent_values][7]
     print("Current GBP TO USD value - ",current_GBP_TO_USD)
@@ -101,15 +103,14 @@ def main():
     enter_label.place(x=75,y=122)
 
     def GBP_value_chart_fun():
+        plt.subplots_adjust(left=0.086,bottom=0.229,right=0.988,top=0.974)
         # GBP TO EUR 
-        #plt.subplots_adjust(top)
-        plt.plot(last_30_days,last_30_days_GBP_TO_EUR_VALUE)
+        plt.plot(last_30_days,last_30_days_GBP_TO_EUR_VALUE,color="blue")
         #GBP TO AUD
-        plt.plot(last_30_days,last_30_days_GBP_TO_AUD_VALUE)
+        plt.plot(last_30_days,last_30_days_GBP_TO_AUD_VALUE,color="orange")
         #GBP TO USD 
-        plt.plot(last_30_days,last_30_days_GBP_TO_USD_VALUE)
-        #GBP TO JPY
-        #plt.plot(last_30_days,last_30_days_GBP_TO_JPY_VALUE)
+        plt.plot(last_30_days,last_30_days_GBP_TO_USD_VALUE,color="green")
+
 
         plt.xticks(rotation=90)
         blue_patch = mpatches.Patch(color='blue', label='GBP TO EUR')
@@ -120,21 +121,52 @@ def main():
         plt.legend(handles=[blue_patch,orange_patch,green_patch])
         plt.show()
 
-    def GBP_FROM_CHART():
-        # GBP TO EUR 
-        plt.plot(last_30_days,last_30_days_EUR_TO_GBP_VALUE)
-        #GBP TO AUD
-        plt.plot(last_30_days,last_30_days_AUD_TO_GBP_VALUE)
-        #GBP TO USD 
-        #plt.plot(last_30_days,last_30_days_USD_TO_GBP_VALUE)
-        #GBP TO JPY
-        #plt.plot(last_30_days,last_30_days_GBP_TO_JPY_VALUE)
+    def EUR_VALUE_CHART_fun():
+        plt.subplots_adjust(left=0.086,bottom=0.229,right=0.988,top=0.974)
+        # EUR TO GBP 
+        plt.plot(last_30_days,last_30_days_EUR_TO_GBP_VALUE,color="blue")
 
         plt.xticks(rotation=90)
         blue_patch = mpatches.Patch(color='blue', label='EUR TO GBP')
-        green_patch = mpatches.Patch(color='green', label='USD TO GBP')
+        plt.xlabel("Dates")
+        plt.ylabel("Price")
+        plt.legend(handles=[blue_patch])
+        plt.show()
+
+    def AUD_VALUE_CHART_FUN():
+        plt.subplots_adjust(left=0.086,bottom=0.229,right=0.988,top=0.974)
+        # AUD TO GBP 
+        plt.plot(last_30_days,last_30_days_AUD_TO_GBP_VALUE,color="orange")
+
+        plt.xticks(rotation=90)
         orange_patch = mpatches.Patch(color='orange', label='AUD TO GBP')
-        plt.legend(handles=[blue_patch,orange_patch,green_patch])
+        plt.xlabel("Dates")
+        plt.ylabel("Price")
+        plt.legend(handles=[orange_patch])
+        plt.show()
+
+    def JPY_VALUE_CHART_FUN():
+        plt.subplots_adjust(left=0.086,bottom=0.229,right=0.988,top=0.974)
+        # JPY TO GBP 
+        plt.plot(last_30_days,last_30_days_JPY_TO_GBP_VALUE,color="red")
+
+        plt.xticks(rotation=90)
+        red_patch = mpatches.Patch(color='red', label='JPY TO GBP')
+        plt.xlabel("Dates")
+        plt.ylabel("Price")
+        plt.legend(handles=[red_patch])
+        plt.show()
+
+    def USD_VALUE_CHART_FUN():
+        plt.subplots_adjust(left=0.086,bottom=0.229,right=0.988,top=0.974)
+        # USD TO GBP 
+        plt.plot(last_30_days,last_30_days_USD_TO_GBP_VALUE,color="green")
+
+        plt.xticks(rotation=90)
+        green_patch = mpatches.Patch(color='green', label='USD TO GBP')
+        plt.xlabel("Dates")
+        plt.ylabel("Price")
+        plt.legend(handles=[green_patch])
         plt.show()
 
 
@@ -500,13 +532,12 @@ def main():
                 Exchanged_to.delete(0, "end")
                 Exchanged_to.insert(0,string_cal)
                 Exchanged_to.config(state="disabled")
-
             # EUR TO ALL -------------------------------------------------------------------------------------------------------------------------------------------------------
         except ValueError:
             Warning_error = tk.Label(root, text=" * Make sure you enter a number in both fields.",fg="Red",font=("arial",12))
             Warning_error.place(x=120,y=410)
             From_entry.delete(0,"end")
-            
+           
     #Entry From
     From_entry = tk.Entry(root,font=("arial",15),width=10,justify="center")
     From_entry.place(x=200,y=120)
@@ -518,18 +549,24 @@ def main():
     #Convert button
     Convert_button = tk.Button(root, text="Convert",font=("arial",15),command=convert_cur)
     Convert_button.place(x=220,y=295)
-            
     convert_label = tk.Label(root, text="Conversion: ",font=("arial",12))
     convert_label.place(x=80,y=364)
 
-    # (GBP TO) Chart
-    
+    #GBP,EUR,AUD,JPY,USD Chart
     GBP_value_chart = customtkinter.CTkButton(master=root, text="Value of GBP",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_value_chart_fun)
     GBP_value_chart.place(x=500,y=90)
 
-    #GBP_FROM_converter_chart  = customtkinter.CTkButton(master=root, text="Value of [USD,AUD,EUR]",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_TO_CHART)
-    #GBP_FROM_converter_chart.place(x=500,y=140)
+    EUR_value_chart = customtkinter.CTkButton(master=root, text="Value of EUR",font=("arial",13),corner_radius=6,border_width=2,width=4,command=EUR_VALUE_CHART_fun)
+    EUR_value_chart.place(x=500,y=140)
 
+    AUD_value_chart = customtkinter.CTkButton(master=root, text="Value of AUD",font=("arial",13),corner_radius=6,border_width=2,width=4,command=AUD_VALUE_CHART_FUN)
+    AUD_value_chart.place(x=500,y=190)
+    
+    JPY_value_chart = customtkinter.CTkButton(master=root, text="Value of JPY",font=("arial",13),corner_radius=6,border_width=2,width=4,command=JPY_VALUE_CHART_FUN)
+    JPY_value_chart.place(x=500,y=240)
+
+    USD_value_chart = customtkinter.CTkButton(master=root, text="Value of USD",font=("arial",13),corner_radius=6,border_width=2,width=4,command=USD_VALUE_CHART_FUN)
+    USD_value_chart.place(x=500,y=290)
 
     #selection buttons(from)
     GBP_button_from = customtkinter.CTkButton(master=root, text="GBP",fg_color="#388E8E",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_flag_from)
@@ -543,7 +580,7 @@ def main():
     USD_button_from = customtkinter.CTkButton(master=root, text="USD",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=USD_flag_from)
     USD_button_from.place(x=425,y=70)
 
-    #selection butons(to)
+    #selection buttons(to)
     GBP_button_to = customtkinter.CTkButton(master=root, text="GBP",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=GBP_flag_to)
     GBP_button_to.place(x=125,y=210)
     EUR_button_to = customtkinter.CTkButton(master=root, text="EUR",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=EUR_flag_to)
@@ -555,4 +592,5 @@ def main():
     USD_button_to = customtkinter.CTkButton(master=root, text="USD",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=USD_flag_to)
     USD_button_to.place(x=425,y=210)
     root.mainloop()
+
 main()
