@@ -35,13 +35,8 @@ def main():
     for i in range(0,30):
         x = 30
         n = x - i 
-        print("Value N",n)
-    
         y = len(current_data) 
-        print("Value Y :", y)
-
         v = y - n
-        print("Final Value", v)
         # Appending the data to its corresponding array
         last_30_days.append(current_data[v][0])
         last_30_days_GBP_TO_EUR_VALUE.append(float(current_data[v][1]))
@@ -105,17 +100,14 @@ def main():
     enter_label = tk.Label(root,text="Enter the amount: ")
     enter_label.place(x=75,y=122)
 
-    def GBP_TO_CHART():
+    def GBP_value_chart_fun():
         # GBP TO EUR 
-        plt.subplots_adjust(top)
+        #plt.subplots_adjust(top)
         plt.plot(last_30_days,last_30_days_GBP_TO_EUR_VALUE)
-
         #GBP TO AUD
         plt.plot(last_30_days,last_30_days_GBP_TO_AUD_VALUE)
-
         #GBP TO USD 
         plt.plot(last_30_days,last_30_days_GBP_TO_USD_VALUE)
-
         #GBP TO JPY
         #plt.plot(last_30_days,last_30_days_GBP_TO_JPY_VALUE)
 
@@ -131,13 +123,10 @@ def main():
     def GBP_FROM_CHART():
         # GBP TO EUR 
         plt.plot(last_30_days,last_30_days_EUR_TO_GBP_VALUE)
-
         #GBP TO AUD
         plt.plot(last_30_days,last_30_days_AUD_TO_GBP_VALUE)
-
         #GBP TO USD 
-        plt.plot(last_30_days,last_30_days_USD_TO_GBP_VALUE)
-
+        #plt.plot(last_30_days,last_30_days_USD_TO_GBP_VALUE)
         #GBP TO JPY
         #plt.plot(last_30_days,last_30_days_GBP_TO_JPY_VALUE)
 
@@ -176,6 +165,13 @@ def main():
         AUS_calculation_from = False
         JPY_calculation_from = False
         USD_calculation_from = False
+
+        GBP_button_to.configure(fg_color="grey",state="disabled")
+        JPY_button_to.configure(fg_color="#388E8E",state="normal")
+        AUS_button_to.configure(fg_color="#388E8E",state="normal")
+        EUR_button_to.configure(fg_color="#388E8E",state="normal")
+        USD_button_to.configure(fg_color="#388E8E",state="normal")
+
         print("after specific (from) button is pressed")
         print("GBP",GBP_calculation_from,"<-")
         print("EUR",EUR_calculation_from)
@@ -191,6 +187,12 @@ def main():
         global AUS_calculation_from
         global JPY_calculation_from
         global USD_calculation_from
+
+        GBP_button_to.configure(fg_color="#388E8E",state="normal")
+        JPY_button_to.configure(fg_color="#388E8E",state="normal")
+        AUS_button_to.configure(fg_color="#388E8E",state="normal")
+        EUR_button_to.configure(fg_color="grey",state="disabled")
+        USD_button_to.configure(fg_color="#388E8E",state="normal")
 
         GBP_calculation_from = False
         EUR_calculation_from = True
@@ -213,6 +215,12 @@ def main():
         global JPY_calculation_from
         global USD_calculation_from
 
+        GBP_button_to.configure(fg_color="#388E8E",state="normal")
+        JPY_button_to.configure(fg_color="#388E8E",state="normal")
+        AUS_button_to.configure(fg_color="grey",state="disabled")
+        EUR_button_to.configure(fg_color="#388E8E",state="normal")
+        USD_button_to.configure(fg_color="#388E8E",state="normal")
+
         GBP_calculation_from = False
         EUR_calculation_from = False
         AUS_calculation_from = True
@@ -234,6 +242,12 @@ def main():
         global JPY_calculation_from
         global USD_calculation_from
 
+        GBP_button_to.configure(fg_color="#388E8E",state="normal")
+        JPY_button_to.configure(fg_color="grey",state="disabled")
+        AUS_button_to.configure(fg_color="#388E8E",state="normal")
+        EUR_button_to.configure(fg_color="#388E8E",state="normal")
+        USD_button_to.configure(fg_color="#388E8E",state="normal")
+
         GBP_calculation_from = False
         EUR_calculation_from = False
         AUS_calculation_from = False
@@ -254,6 +268,12 @@ def main():
         global AUS_calculation_from
         global JPY_calculation_from
         global USD_calculation_from
+
+        GBP_button_to.configure(fg_color="#388E8E",state="normal")
+        JPY_button_to.configure(fg_color="#388E8E",state="normal")
+        AUS_button_to.configure(fg_color="#388E8E",state="normal")
+        EUR_button_to.configure(fg_color="#388E8E",state="normal")
+        USD_button_to.configure(fg_color="grey",state="disabled")
 
         GBP_calculation_from = False
         EUR_calculation_from = False
@@ -481,16 +501,12 @@ def main():
                 Exchanged_to.insert(0,string_cal)
                 Exchanged_to.config(state="disabled")
 
-
             # EUR TO ALL -------------------------------------------------------------------------------------------------------------------------------------------------------
-
         except ValueError:
             Warning_error = tk.Label(root, text=" * Make sure you enter a number in both fields.",fg="Red",font=("arial",12))
             Warning_error.place(x=120,y=410)
             From_entry.delete(0,"end")
             
-
-
     #Entry From
     From_entry = tk.Entry(root,font=("arial",15),width=10,justify="center")
     From_entry.place(x=200,y=120)
@@ -507,36 +523,36 @@ def main():
     convert_label.place(x=80,y=364)
 
     # (GBP TO) Chart
-    GBP_converter_chart = customtkinter.CTkButton(master=root, text="Value of GBP",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_TO_CHART)
-    GBP_converter_chart.place(x=500,y=90)
+    
+    GBP_value_chart = customtkinter.CTkButton(master=root, text="Value of GBP",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_value_chart_fun)
+    GBP_value_chart.place(x=500,y=90)
 
-    GBP_FROM_converter_chart  = customtkinter.CTkButton(master=root, text="Value of [USD,AUD,EUR]",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_TO_CHART)
-    GBP_FROM_converter_chart.place(x=500,y=140)
+    #GBP_FROM_converter_chart  = customtkinter.CTkButton(master=root, text="Value of [USD,AUD,EUR]",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_TO_CHART)
+    #GBP_FROM_converter_chart.place(x=500,y=140)
 
 
     #selection buttons(from)
-    GBP_button_from = customtkinter.CTkButton(master=root, text="GBP",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_flag_from)
+    GBP_button_from = customtkinter.CTkButton(master=root, text="GBP",fg_color="#388E8E",font=("arial",13),corner_radius=6,border_width=2,width=4,command=GBP_flag_from)
     GBP_button_from.place(x=125,y=70)
-    EUR_button_from = customtkinter.CTkButton(master=root, text="EUR",font=("arial",12),corner_radius=6,border_width=2,width=4,command=EUR_flag_from)
+    EUR_button_from = customtkinter.CTkButton(master=root, text="EUR",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=EUR_flag_from)
     EUR_button_from.place(x=200,y=70)
-    AUS_button_from = customtkinter.CTkButton(master=root, text="AUS",font=("arial",12),corner_radius=6,border_width=2,width=4,command=AUS_flag_from)
+    AUS_button_from = customtkinter.CTkButton(master=root, text="AUS",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=AUS_flag_from)
     AUS_button_from.place(x=275,y=70)
-    JPY_button_from = customtkinter.CTkButton(master=root, text="JPY",font=("arial",12),corner_radius=6,border_width=2,width=4,command=JPY_flag_from)
+    JPY_button_from = customtkinter.CTkButton(master=root, text="JPY",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=JPY_flag_from)
     JPY_button_from.place(x=350,y=70)
-    USD_button_from = customtkinter.CTkButton(master=root, text="USD",font=("arial",12),corner_radius=6,border_width=2,width=4,command=USD_flag_from)
+    USD_button_from = customtkinter.CTkButton(master=root, text="USD",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=USD_flag_from)
     USD_button_from.place(x=425,y=70)
 
-    #selection buttons(to)
-    GBP_button_to = customtkinter.CTkButton(master=root, text="GBP",font=("arial",12),corner_radius=6,border_width=2,width=4,command=GBP_flag_to)
+    #selection butons(to)
+    GBP_button_to = customtkinter.CTkButton(master=root, text="GBP",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=GBP_flag_to)
     GBP_button_to.place(x=125,y=210)
-    EUR_button_to = customtkinter.CTkButton(master=root, text="EUR",font=("arial",12),corner_radius=6,border_width=2,width=4,command=EUR_flag_to)
+    EUR_button_to = customtkinter.CTkButton(master=root, text="EUR",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=EUR_flag_to)
     EUR_button_to.place(x=200,y=210)
-    AUS_button_to = customtkinter.CTkButton(master=root, text="AUS",font=("arial",12),corner_radius=6,border_width=2,width=4,command=AUS_flag_to)
+    AUS_button_to = customtkinter.CTkButton(master=root, text="AUS",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=AUS_flag_to)
     AUS_button_to.place(x=275,y=210)
-    JPY_button_to = customtkinter.CTkButton(master=root, text="JPY",font=("arial",12),corner_radius=6,border_width=2,width=4,command=JPY_flag_to)
+    JPY_button_to = customtkinter.CTkButton(master=root, text="JPY",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=JPY_flag_to)
     JPY_button_to.place(x=350,y=210)
-    USD_button_to = customtkinter.CTkButton(master=root, text="USD",font=("arial",12),corner_radius=6,border_width=2,width=4,command=USD_flag_to)
+    USD_button_to = customtkinter.CTkButton(master=root, text="USD",fg_color="#388E8E",font=("arial",12),corner_radius=6,border_width=2,width=4,command=USD_flag_to)
     USD_button_to.place(x=425,y=210)
     root.mainloop()
-
 main()
